@@ -74,10 +74,7 @@ def mc_control(env, gamma=1.0, init_alpha=0.5, min_alpha=0.01, alpha_decay_ratio
   pi_track=[]
   Q = np.zeros((nS, nA), dtype=np.float64)
   Q_track = np.zeros((n_episodes, nS, nA), dtype=np.float64)
-  select_action=lambda state,Q,epsilon:\
-    np.argmax(Q[state])\
-    if np.random.random()>epsilon\
-    else np.random.randint(len(Q[state]))
+  select_action=lambda state,Q,epsilon:np.argmax(Q[state]) if np.random.random()>epsilon else np.random.randint(len(Q[state]))
   for e in tqdm(range(n_episodes),leave=False):
     trajectory=generate_trajectory(select_action,Q,epsilons[e],env,max_steps)
     visited=np.zeros((nS,nA),dtype=bool)
